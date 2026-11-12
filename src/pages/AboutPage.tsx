@@ -15,7 +15,7 @@ export default function AboutPage() {
   )}`;
 
   return (
-    <div className="pt-14 sm:pt-20">
+    <div className="pt-6 sm:pt-10">
       <SEOHead
         title={`About Us | ${biz.name} — Your Technology Partner in Kharadi, Pune`}
         description={`Learn about ${biz.name} in Ashoka Nagar, Kharadi, Pune. Rated 4.8 stars on Google and Justdial for expert laptop repair, refurbished laptops, custom desktops, and genuine computer accessories.`}

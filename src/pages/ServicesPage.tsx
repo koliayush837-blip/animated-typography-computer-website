@@ -45,7 +45,7 @@ export default function ServicesPage() {
   )}`;
 
   return (
-    <div className="pt-14 sm:pt-20">
+    <div className="pt-6 sm:pt-10">
       <SEOHead
         title={`Services — Laptop Repair, Chip-Level Repair & Upgrades | ${biz.name}`}
         description={`Expert computer repair, laptop chip-level repair, screen & battery replacement, RAM/SSD hardware upgrades, OS installation and laptop rental at ${biz.name}, Kharadi, Pune.`}

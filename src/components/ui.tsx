@@ -73,7 +73,7 @@ export function PaperText({
       className={cn("cut max-w-full", `cut-${tone}`, className)}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={{ hidden: {}, show: { transition: { staggerChildren: stagger, delayChildren: delay } } }}
     >
       {words.map((w, wi) => (
@@ -122,10 +122,10 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, x, rotate: rotate * 3 + (x ? 3 : 0), scale: 0.95 }}
+      initial={{ opacity: 0, y: Math.min(y, 35), x, rotate: rotate * 2 + (x ? 2 : 0), scale: 0.97 }}
       whileInView={{ opacity: 1, y: 0, x: 0, rotate, scale: 1 }}
-      viewport={{ once: true, margin: "-70px" }}
-      transition={{ type: "spring", stiffness: 70, damping: 16, delay }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ type: "spring", stiffness: 90, damping: 16, delay }}
     >
       {children}
     </motion.div>

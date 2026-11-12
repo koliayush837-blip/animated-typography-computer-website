@@ -10,8 +10,8 @@ const loginAttempts = new Map();
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 15 * 60 * 1000; // 15 minutes lockout window
 
-// Clean up expired sessions periodically
-setInterval(() => {
+// Clean up expired sessions periodically (unref so it never blocks CLI/build processes)
+const cleanupTimer = setInterval(() => {
   const now = Date.now();
   for (const [token, session] of activeSessions.entries()) {
     if (session.expiresAt <= now) {
@@ -26,6 +26,9 @@ setInterval(() => {
     }
   }
 }, 5 * 60 * 1000);
+if (typeof cleanupTimer.unref === "function") {
+  cleanupTimer.unref();
+}
 
 // Initialize Admin Password Hash if not already set
 export function ensureAdminPasswordInitialized() {

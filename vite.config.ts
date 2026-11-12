@@ -4,8 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
-// @ts-expect-error JS server middleware module
-import { createApiMiddleware } from "./server/middleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +16,9 @@ export default defineConfig({
     viteSingleFile(),
     {
       name: "padmashree-api-middleware",
-      configureServer(server) {
+      async configureServer(server) {
+        // @ts-expect-error JS server middleware module loaded only in dev server
+        const { createApiMiddleware } = await import("./server/middleware.js");
         server.middlewares.use(createApiMiddleware());
       },
     },
