@@ -66,7 +66,7 @@ function MainContent() {
         return <ServicesPage />;
       case "/why":
         return (
-          <div>
+          <div className="pt-20 sm:pt-24">
             <SEOHead
               title={`Why Choose Us | ${biz.name} — 4.8★ Rated Computer Shop in Kharadi`}
               description={`See why customers rate ${biz.name} 4.8 stars on Google and Justdial: expert technicians, transparent pricing, and quick turnaround.`}
@@ -76,7 +76,7 @@ function MainContent() {
         );
       case "/reviews":
         return (
-          <div>
+          <div className="pt-20 sm:pt-24">
             <SEOHead
               title={`Customer Reviews | ${biz.name} — Kharadi, Pune`}
               description={`Read genuine Google customer reviews for ${biz.name} in Ashoka Nagar, Kharadi, Pune.`}
@@ -86,7 +86,7 @@ function MainContent() {
         );
       case "/gallery":
         return (
-          <div>
+          <div className="pt-20 sm:pt-24">
             <SEOHead
               title={`Shop Gallery | ${biz.name} — Inside Our Kharadi Repair Bench & Store`}
               description={`Take a look inside ${biz.name} in Kharadi, Pune — our laptop repair workbench, inventory shelves, and technicians.`}

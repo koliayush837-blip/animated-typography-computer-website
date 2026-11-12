@@ -35,9 +35,7 @@ body {
 }
 
 #root,
-main,
-section,
-footer {
+main {
   overflow-x: clip;
   max-width: 100%;
 }

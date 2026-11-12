@@ -7,7 +7,7 @@ export default function Reviews() {
   const reviews = data.reviews;
 
   return (
-    <section id="reviews" className="relative px-4 pb-24 pt-20 sm:pb-28 sm:pt-24 md:px-8 md:pt-28">
+    <section id="reviews" className="relative px-4 pb-24 pt-12 sm:pb-28 sm:pt-16 md:px-8 md:pt-20">
       <Torn fill="#f5efe3" seed={53} position="top" />
       <div className="mx-auto max-w-[1400px]">
         <SectionHead

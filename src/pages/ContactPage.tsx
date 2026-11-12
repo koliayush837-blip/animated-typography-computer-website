@@ -7,7 +7,7 @@ export default function ContactPage() {
   const biz = data.biz;
 
   return (
-    <div>
+    <div className="pt-20 sm:pt-24">
       <SEOHead
         title={`Contact Us — Visit or Call ${biz.name} in Kharadi, Pune`}
         description={`Contact ${biz.name} at ${biz.address}. Call ${biz.phoneDisplay} or chat on WhatsApp (+${biz.whatsapp}) for laptop repairs, upgrades, and product enquiries.`}

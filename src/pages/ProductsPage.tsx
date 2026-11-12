@@ -13,7 +13,7 @@ export default function ProductsPage() {
   )}`;
 
   return (
-    <div>
+    <div className="pt-20 sm:pt-24">
       <SEOHead
         title={`Products & Pricing | ${biz.name} — Laptops, Monitors, Printers & Accessories`}
         description={`Browse new and refurbished laptops, desktops, monitors, printers, UPS, mice, headphones, software and laptop spares at ${biz.name} in Kharadi, Pune.`}

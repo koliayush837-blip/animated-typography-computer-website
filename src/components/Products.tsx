@@ -103,7 +103,7 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
   }, [mode, featuredProducts, currentActive, allProducts, stockFilter, searchQuery]);
 
   return (
-    <section id="products" className="relative bg-paper-dark px-4 pb-24 pt-20 sm:pb-28 sm:pt-24 md:px-8 md:pt-28">
+    <section id="products" className="relative bg-paper-dark px-4 pb-24 pt-12 sm:pb-28 sm:pt-16 md:px-8 md:pt-20">
       <Torn fill="#ebe2cf" seed={31} position="top" />
       <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">

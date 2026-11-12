@@ -96,12 +96,6 @@
       "label": "Laptops",
       "items": [
         {
-          "name": "Test Laptop",
-          "price": "50000",
-          "inStock": true,
-          "stockStatus": "in_stock"
-        },
-        {
           "name": "Dell Latitude 5300 2-in-1",
           "tag": "Business",
           "inStock": true,
@@ -417,11 +411,6 @@
     }
   ],
   "gallery": [
-    {
-      "src": "/uploads/img_1794481317103_6be9a83ede6a.png",
-      "cap": "gaming mouse",
-      "alt": "gaming mouse"
-    },
     {
       "src": "https://images.pexels.com/photos/10558598/pexels-photo-10558598.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=900",
       "cap": "Chip-level repair",

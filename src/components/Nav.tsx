@@ -75,7 +75,7 @@ export default function Nav() {
         <div
           className={cn(
             "mx-auto transition-all duration-500",
-            scrolled || open
+            scrolled || open || pathname !== "/"
               ? "mt-0 max-w-full bg-paper-light/95 shadow-[0_6px_20px_rgba(8,18,47,.18)] backdrop-blur"
               : "mt-2 max-w-[1400px] bg-paper-light/85 shadow-[0_4px_14px_rgba(8,18,47,.1)] backdrop-blur-sm sm:mt-3 sm:bg-transparent sm:shadow-none sm:backdrop-blur-none md:mt-5",
           )}
