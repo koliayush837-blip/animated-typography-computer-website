@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Phone, Plus, Settings } from "lucide-react";
+import { Phone, Plus, Settings, CheckCircle2, AlertTriangle, XCircle, Clock } from "lucide-react";
 import { Reveal, SectionHead, Torn } from "./ui";
 import { cn } from "../utils/cn";
 import { useData } from "../context/DataContext";
@@ -99,8 +99,8 @@ export default function Products() {
                       exit: { opacity: 0, y: 30, transition: { duration: 0.15 } },
                     }}
                   >
-                    <div className="drop group transition-transform duration-500 hover:-translate-y-2 hover:rotate-0">
-                      <div className="relative flex overflow-hidden rounded-md paper-bg">
+                    <div className="drop group transition-transform duration-500 hover:-translate-y-2 hover:rotate-0 h-full flex flex-col">
+                      <div className="relative flex flex-1 flex-col overflow-hidden rounded-md paper-bg sm:flex-row">
                         {/* ticket stub */}
                         <div className={cn("relative hidden w-14 shrink-0 items-center justify-center sm:flex", priced ? "bg-brand" : "bg-navy")}>
                           <span className="absolute -top-3 left-1/2 h-6 w-6 -translate-x-1/2 rounded-full bg-paper-dark" />
@@ -109,14 +109,56 @@ export default function Products() {
                             {cat.label}
                           </span>
                         </div>
-                        <div className="min-w-0 flex-1 border-l-2 border-dashed border-navy/20 p-4 sm:p-5">
-                          {it.tag && (
-                            <span className="mb-3 inline-block rounded-sm bg-navy/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-navy/70">
-                              {it.tag}
-                            </span>
-                          )}
-                          <h3 className="text-lg font-extrabold leading-tight tracking-tight text-navy sm:min-h-[3.2rem] sm:text-xl">{it.name}</h3>
-                          <div className="mt-4 flex items-end justify-between">
+
+                        <div className="min-w-0 flex-1 border-t-2 sm:border-t-0 sm:border-l-2 border-dashed border-navy/20 p-4 sm:p-5 flex flex-col justify-between">
+                          <div>
+                            {/* Product Image if present */}
+                            {it.image && (
+                              <div className="mb-3.5 h-36 w-full overflow-hidden rounded-lg bg-navy/5 border border-navy/10">
+                                <img
+                                  src={it.image}
+                                  alt={it.name}
+                                  loading="lazy"
+                                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                              </div>
+                            )}
+
+                            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+                              {it.tag && (
+                                <span className="inline-block rounded-sm bg-navy/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-navy/70">
+                                  {it.tag}
+                                </span>
+                              )}
+
+                              {it.stockStatus === "in_stock" && (
+                                <span className="inline-flex items-center gap-1 rounded-sm bg-emerald-100 text-emerald-800 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                                  <CheckCircle2 size={10} /> In Stock
+                                </span>
+                              )}
+                              {it.stockStatus === "low_stock" && (
+                                <span className="inline-flex items-center gap-1 rounded-sm bg-amber-100 text-amber-900 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                                  <AlertTriangle size={10} /> Low Stock
+                                </span>
+                              )}
+                              {it.stockStatus === "out_of_stock" && (
+                                <span className="inline-flex items-center gap-1 rounded-sm bg-red-100 text-red-800 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                                  <XCircle size={10} /> Out of Stock
+                                </span>
+                              )}
+                              {it.stockStatus === "on_order" && (
+                                <span className="inline-flex items-center gap-1 rounded-sm bg-blue-100 text-blue-900 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                                  <Clock size={10} /> On Order
+                                </span>
+                              )}
+                            </div>
+
+                            <h3 className="text-lg font-extrabold leading-tight tracking-tight text-navy sm:min-h-[2.8rem] sm:text-xl">
+                              {it.name}
+                            </h3>
+                          </div>
+
+                          <div className="mt-4 flex items-end justify-between pt-2 border-t border-navy/10">
                             {priced ? (
                               <p className="flex items-start font-extrabold text-brand">
                                 <span className="mr-1 mt-1 text-lg">₹</span>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
-import { GALLERY } from "../data";
+import { X, Image as ImageIcon, Plus } from "lucide-react";
 import { Reveal, SectionHead, Torn } from "./ui";
+import { useData } from "../context/DataContext";
 
 export default function Gallery() {
+  const { data, setIsAdminOpen, isAdminAuthenticated } = useData();
+  const gallery = data.gallery && data.gallery.length > 0 ? data.gallery : [];
   const [sel, setSel] = useState<number | null>(null);
 
   useEffect(() => {
@@ -18,18 +20,31 @@ export default function Gallery() {
     <section id="gallery" className="relative bg-brand px-4 pb-24 pt-16 sm:pb-32 sm:pt-24 md:px-8 md:pt-32">
       <Torn fill="#d9283a" seed={67} position="top" />
       <div className="mx-auto max-w-[1400px]">
-        <SectionHead
-          no="05"
-          eyebrow="Inside the shop"
-          title="Gallery"
-          tone="white"
-          dark
-          sub="A look at the bench, the shelves and the people who keep your machines running."
-        />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+          <SectionHead
+            no="05"
+            eyebrow="Inside the shop"
+            title="Gallery"
+            tone="white"
+            dark
+            sub="A look at the bench, the shelves and the people who keep your machines running."
+            className="mb-6 md:mb-12"
+          />
+
+          <div className="mb-8 flex items-center gap-2 md:mb-12">
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/30 bg-paper-light/10 px-3.5 py-2 text-xs font-bold text-white shadow-sm backdrop-blur transition-all hover:bg-white hover:text-navy"
+            >
+              <ImageIcon size={14} />
+              {isAdminAuthenticated ? "Manage Gallery Photos" : "Gallery Admin"}
+            </button>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 gap-x-5 gap-y-8 min-[480px]:grid-cols-2 min-[480px]:gap-y-10 md:grid-cols-3 md:gap-x-10 md:gap-y-14">
-          {GALLERY.map((g, i) => (
-            <Reveal key={g.src} delay={(i % 3) * 0.1} rotate={[-3, 2, -1.5, 2.5, -2, 1.5][i]} y={80}>
+          {gallery.map((g, i) => (
+            <Reveal key={`${g.src}-${i}`} delay={(i % 3) * 0.1} rotate={[-3, 2, -1.5, 2.5, -2, 1.5][i % 6]} y={80}>
               <motion.button
                 onClick={() => setSel(i)}
                 whileHover={{ rotate: 0, scale: 1.05, y: -8, zIndex: 20 }}
@@ -46,10 +61,22 @@ export default function Gallery() {
             </Reveal>
           ))}
         </div>
+
+        {gallery.length === 0 && (
+          <div className="rounded-2xl border-2 border-dashed border-white/40 p-12 text-center text-white">
+            <p className="text-lg font-extrabold">No gallery photos added yet.</p>
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-navy shadow-lg"
+            >
+              <Plus size={16} /> Add First Photo
+            </button>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
-        {sel !== null && (
+        {sel !== null && gallery[sel] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -65,8 +92,8 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
               className="relative my-8 w-full max-w-3xl bg-paper-light p-3 pb-6 shadow-2xl sm:p-5 sm:pb-8"
             >
-              <img src={GALLERY[sel].src} alt={GALLERY[sel].alt} className="max-h-[70vh] w-full object-cover" />
-              <p className="mt-4 pr-8 font-serif text-xl italic text-navy sm:text-3xl">{GALLERY[sel].cap}</p>
+              <img src={gallery[sel].src} alt={gallery[sel].alt} className="max-h-[70vh] w-full object-cover" />
+              <p className="mt-4 pr-8 font-serif text-xl italic text-navy sm:text-3xl">{gallery[sel].cap}</p>
               <button
                 onClick={() => setSel(null)}
                 aria-label="Close"

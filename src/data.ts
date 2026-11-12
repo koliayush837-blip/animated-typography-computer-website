@@ -82,7 +82,14 @@ export const SERVICES = [
   },
 ] as const;
 
-export type Item = { name: string; price?: string; tag?: string };
+export type Item = {
+  name: string;
+  price?: string;
+  tag?: string;
+  image?: string;
+  inStock?: boolean;
+  stockStatus?: "in_stock" | "low_stock" | "out_of_stock" | "on_order";
+};
 
 export const CATALOG: { id: string; label: string; items: Item[] }[] = [
   {
