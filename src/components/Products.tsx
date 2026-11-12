@@ -103,7 +103,7 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
   }, [mode, featuredProducts, currentActive, allProducts, stockFilter, searchQuery]);
 
   return (
-    <section id="products" className="relative bg-paper-dark px-4 pb-24 pt-16 sm:pb-32 sm:pt-24 md:px-8 md:pt-32">
+    <section id="products" className="relative bg-paper-dark px-4 pb-24 pt-20 sm:pb-28 sm:pt-24 md:px-8 md:pt-28">
       <Torn fill="#ebe2cf" seed={31} position="top" />
       <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -117,10 +117,10 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                 ? "Top picks across laptops, monitors, printers and accessories. Tap any product for full specifications."
                 : "Prices as listed. Anything marked 'Call for price' changes with stock, so ring us for today's best rate."
             }
-            className="mb-6 md:mb-12"
+            className="mb-4 md:mb-6"
           />
 
-          <div className="mb-6 flex flex-wrap items-center gap-2 md:mb-12">
+          <div className="mb-4 flex flex-wrap items-center gap-2 md:mb-6">
             <button
               onClick={() => setIsAdminOpen(true)}
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-4 py-2.5 text-xs font-bold text-navy shadow-sm transition-all hover:bg-navy hover:text-white"

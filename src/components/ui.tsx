@@ -72,8 +72,7 @@ export function PaperText({
       aria-label={label ?? text}
       className={cn("cut max-w-full", `cut-${tone}`, className)}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.1 }}
+      animate="show"
       variants={{ hidden: {}, show: { transition: { staggerChildren: stagger, delayChildren: delay } } }}
     >
       {words.map((w, wi) => (
@@ -122,10 +121,9 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: Math.min(y, 35), x, rotate: rotate * 2 + (x ? 2 : 0), scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, x: 0, rotate, scale: 1 }}
-      viewport={{ once: true, amount: 0.05 }}
-      transition={{ type: "spring", stiffness: 90, damping: 16, delay }}
+      initial={{ opacity: 0, y: Math.min(y, 24), x, rotate: rotate * 1.5, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, x: 0, rotate, scale: 1 }}
+      transition={{ type: "spring", stiffness: 110, damping: 18, delay: Math.min(delay, 0.25) }}
     >
       {children}
     </motion.div>
@@ -206,30 +204,30 @@ export function SectionHead({
   className?: string;
 }) {
   return (
-    <div className={cn("mb-10 md:mb-20", className)}>
-      <Reveal y={20}>
+    <div className={cn("mb-6 md:mb-8", className)}>
+      <Reveal y={14}>
         <div
           className={cn(
-            "mb-5 inline-flex max-w-full flex-wrap items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.18em] sm:mb-6 sm:gap-3 sm:text-xs sm:tracking-[0.25em]",
+            "mb-2.5 inline-flex max-w-full flex-wrap items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.18em] sm:mb-3 sm:gap-3 sm:text-xs sm:tracking-[0.25em]",
             dark ? "text-paper/80" : "text-navy/70",
           )}
         >
-          <span className={cn("rounded-sm px-2 py-1 text-white", dark ? "bg-brand" : "bg-brand")}>{no}</span>
+          <span className={cn("rounded-sm px-2 py-0.5 text-white", dark ? "bg-brand" : "bg-brand")}>{no}</span>
           {eyebrow}
-          <span className={cn("h-px w-16", dark ? "bg-paper/40" : "bg-navy/30")} />
+          <span className={cn("h-px w-12 sm:w-16", dark ? "bg-paper/40" : "bg-navy/30")} />
         </div>
       </Reveal>
       <PaperText
         as="h2"
         text={title}
         tone={tone}
-        className="text-[clamp(1.85rem,8vw,8rem)]"
+        className="text-[clamp(1.85rem,5.5vw,4.5rem)]"
       />
       {sub && (
-        <Reveal delay={0.2} y={30}>
+        <Reveal delay={0.1} y={16}>
           <p
             className={cn(
-              "mt-5 max-w-2xl font-serif text-lg italic leading-snug sm:mt-8 sm:text-2xl md:text-3xl",
+              "mt-2.5 max-w-2xl font-serif text-base italic leading-snug sm:mt-3.5 sm:text-xl md:text-2xl",
               dark ? "text-paper/85" : "text-navy/75",
             )}
           >

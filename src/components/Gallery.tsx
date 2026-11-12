@@ -17,7 +17,7 @@ export default function Gallery() {
   }, [sel]);
 
   return (
-    <section id="gallery" className="relative bg-brand px-4 pb-24 pt-16 sm:pb-32 sm:pt-24 md:px-8 md:pt-32">
+    <section id="gallery" className="relative bg-brand px-4 pb-24 pt-20 sm:pb-28 sm:pt-24 md:px-8 md:pt-28">
       <Torn fill="#d9283a" seed={67} position="top" />
       <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -28,10 +28,10 @@ export default function Gallery() {
             tone="white"
             dark
             sub="A look at the bench, the shelves and the people who keep your machines running."
-            className="mb-6 md:mb-12"
+            className="mb-4 md:mb-6"
           />
 
-          <div className="mb-8 flex items-center gap-2 md:mb-12">
+          <div className="mb-5 flex items-center gap-2 md:mb-6">
             <button
               onClick={() => setIsAdminOpen(true)}
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-white/30 bg-paper-light/10 px-4 py-2.5 text-xs font-bold text-white shadow-sm backdrop-blur transition-all hover:bg-white hover:text-navy"

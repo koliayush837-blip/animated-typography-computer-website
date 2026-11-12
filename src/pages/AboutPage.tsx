@@ -1,6 +1,3 @@
-import Why from "../components/Why";
-import Gallery from "../components/Gallery";
-import Reviews from "../components/Reviews";
 import Brands from "../components/Brands";
 import SEOHead from "../components/SEOHead";
 import { PaperButton, Reveal, SectionHead } from "../components/ui";
@@ -15,14 +12,14 @@ export default function AboutPage() {
   )}`;
 
   return (
-    <div className="pt-6 sm:pt-10">
+    <div>
       <SEOHead
         title={`About Us | ${biz.name} — Your Technology Partner in Kharadi, Pune`}
         description={`Learn about ${biz.name} in Ashoka Nagar, Kharadi, Pune. Rated 4.8 stars on Google and Justdial for expert laptop repair, refurbished laptops, custom desktops, and genuine computer accessories.`}
       />
 
       {/* Business Introduction Section */}
-      <section className="relative px-4 pb-20 pt-16 sm:pb-28 sm:pt-24 md:px-8 md:pt-32">
+      <section className="relative px-4 pb-20 pt-20 sm:pb-24 sm:pt-24 md:px-8 md:pt-28">
         <div className="mx-auto max-w-[1400px]">
           <SectionHead
             no="01"
@@ -116,9 +113,6 @@ export default function AboutPage() {
       </section>
 
       <Brands />
-      <Why />
-      <Gallery />
-      <Reviews />
     </div>
   );
 }

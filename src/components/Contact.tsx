@@ -57,7 +57,7 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
   };
 
   return (
-    <section id="contact" className="relative px-4 pb-36 pt-16 sm:pt-24 md:px-8 md:pt-32">
+    <section id="contact" className="relative px-4 pb-36 pt-20 sm:pt-24 md:px-8 md:pt-28">
       <Torn fill="#f5efe3" seed={79} position="top" />
       <div className="mx-auto max-w-[1400px]">
         <SectionHead

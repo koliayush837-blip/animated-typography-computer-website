@@ -4,6 +4,10 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import StickyBar from "./components/StickyBar";
 import AdminModal from "./components/AdminModal";
+import Why from "./components/Why";
+import Reviews from "./components/Reviews";
+import Gallery from "./components/Gallery";
+import SEOHead from "./components/SEOHead";
 import { DataProvider, useData } from "./context/DataContext";
 import { RouterProvider, useRouter, matchProductSlug } from "./utils/router";
 import HomePage from "./pages/HomePage";
@@ -34,7 +38,8 @@ function MainContent() {
     }
   }, []);
 
-  const { setIsAdminOpen } = useData();
+  const { data, setIsAdminOpen } = useData();
+  const biz = data.biz;
 
   // Keyboard shortcut: Ctrl + Shift + A to open Admin Studio
   useEffect(() => {
@@ -59,6 +64,36 @@ function MainContent() {
         return <ProductsPage />;
       case "/services":
         return <ServicesPage />;
+      case "/why":
+        return (
+          <div>
+            <SEOHead
+              title={`Why Choose Us | ${biz.name} — 4.8★ Rated Computer Shop in Kharadi`}
+              description={`See why customers rate ${biz.name} 4.8 stars on Google and Justdial: expert technicians, transparent pricing, and quick turnaround.`}
+            />
+            <Why />
+          </div>
+        );
+      case "/reviews":
+        return (
+          <div>
+            <SEOHead
+              title={`Customer Reviews | ${biz.name} — Kharadi, Pune`}
+              description={`Read genuine Google customer reviews for ${biz.name} in Ashoka Nagar, Kharadi, Pune.`}
+            />
+            <Reviews />
+          </div>
+        );
+      case "/gallery":
+        return (
+          <div>
+            <SEOHead
+              title={`Shop Gallery | ${biz.name} — Inside Our Kharadi Repair Bench & Store`}
+              description={`Take a look inside ${biz.name} in Kharadi, Pune — our laptop repair workbench, inventory shelves, and technicians.`}
+            />
+            <Gallery />
+          </div>
+        );
       case "/about":
         return <AboutPage />;
       case "/contact":
@@ -73,7 +108,7 @@ function MainContent() {
     <>
       {loading && <Preloader onDone={done} />}
       <Nav />
-      <main id="top" className="min-h-[70vh]">
+      <main id="top" key={pathname} className="min-h-[70vh]">
         {renderPage()}
       </main>
       <Footer />

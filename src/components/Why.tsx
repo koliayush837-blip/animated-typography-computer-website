@@ -1,45 +1,38 @@
-import { useEffect, useRef, useState } from "react";
-import { animate, motion, useInView, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
+import { animate, motion } from "framer-motion";
 import { HeartHandshake, IndianRupee, Star, Wrench, Zap } from "lucide-react";
 import { Reveal, SectionHead, Torn } from "./ui";
 
 const STATEMENT =
   "Expert technicians. Transparent pricing. Quick service. Customer satisfaction. That is how a Kharadi computer shop earned a 4.8 rating, one repair at a time.";
 
-function Word({ word, range, progress }: { word: string; range: [number, number]; progress: MotionValue<number> }) {
-  const opacity = useTransform(progress, range, [0.15, 1]);
-  const y = useTransform(progress, range, [10, 0]);
-  return (
-    <motion.span style={{ opacity, y }} className="mr-[0.25em] inline-block">
-      {word}
-    </motion.span>
-  );
-}
-
 function ScrollWords() {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
   const words = STATEMENT.split(" ");
   return (
-    <p ref={ref} className="max-w-5xl text-[clamp(1.35rem,4.2vw,3.6rem)] font-extrabold leading-[1.2] tracking-tight text-paper-light sm:leading-[1.12]">
+    <p className="max-w-5xl text-[clamp(1.25rem,3.2vw,2.6rem)] font-extrabold leading-[1.2] tracking-tight text-paper-light sm:leading-[1.15]">
       {words.map((w, i) => (
-        <Word key={i} word={w} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
+        <motion.span
+          key={i}
+          initial={{ opacity: 0.15, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 + i * 0.025, duration: 0.35 }}
+          className="mr-[0.25em] inline-block"
+        >
+          {w}
+        </motion.span>
       ))}
     </p>
   );
 }
 
 function Counter() {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const [v, setV] = useState(0);
   useEffect(() => {
-    if (!inView) return;
-    const c = animate(0, 4.8, { duration: 2.2, ease: "easeOut", onUpdate: (n) => setV(n) });
+    const c = animate(0, 4.8, { duration: 1.4, ease: "easeOut", onUpdate: (n) => setV(n) });
     return () => c.stop();
-  }, [inView]);
+  }, []);
   return (
-    <span ref={ref} className="cut cut-red text-[clamp(4.2rem,20vw,15rem)]">
+    <span className="cut cut-red text-[clamp(4.2rem,20vw,15rem)]">
       {v.toFixed(1)}
     </span>
   );
@@ -54,7 +47,7 @@ const pillars = [
 
 export default function Why() {
   return (
-    <section id="why" className="relative overflow-hidden bg-navy px-4 pb-20 pt-16 text-white sm:pb-28 sm:pt-24 md:px-8 md:pt-32">
+    <section id="why" className="relative overflow-hidden bg-navy px-4 pb-20 pt-20 text-white sm:pb-24 sm:pt-24 md:px-8 md:pt-28">
       <Torn fill="#0e1c4a" seed={41} position="top" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.07]" aria-hidden="true">
         <svg className="h-full w-full">
@@ -72,8 +65,8 @@ export default function Why() {
 
         <ScrollWords />
 
-        <div className="mt-12 grid items-center gap-10 sm:mt-24 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-          <Reveal rotate={-2} y={80}>
+        <div className="mt-8 grid items-center gap-8 sm:mt-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
+          <Reveal rotate={-2} y={40}>
             <div className="drop-sm relative mx-auto max-w-md">
               <div className="paper-bg relative rounded-md p-6 text-center text-navy sm:p-8">
                 <span className="tape absolute -top-4 left-1/2 h-7 w-28 -translate-x-1/2 rotate-2" />
@@ -84,9 +77,8 @@ export default function Why() {
                     <motion.span
                       key={i}
                       initial={{ scale: 0, rotate: -90 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.4 + i * 0.12, type: "spring", stiffness: 200, damping: 10 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.25 + i * 0.1, type: "spring", stiffness: 200, damping: 10 }}
                     >
                       <Star size={30} fill="currentColor" />
                     </motion.span>

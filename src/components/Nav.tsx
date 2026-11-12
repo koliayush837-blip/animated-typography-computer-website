@@ -101,7 +101,7 @@ export default function Nav() {
               </span>
             </Link>
 
-            <ul className="hidden items-center gap-1 lg:flex">
+            <ul className="hidden items-center gap-0.5 lg:flex xl:gap-1">
               {PAGE_NAV.map((n) => {
                 const isActive = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
                 return (
@@ -109,14 +109,14 @@ export default function Nav() {
                     <Link
                       to={n.href}
                       className={cn(
-                        "group relative inline-flex min-h-[44px] items-center rounded-md px-4 py-2 text-sm font-semibold transition-colors hover:text-brand",
+                        "group relative inline-flex min-h-[44px] items-center rounded-md px-2.5 py-2 text-xs font-semibold transition-colors hover:text-brand xl:px-3.5 xl:text-sm",
                         isActive ? "text-brand font-extrabold" : "text-navy",
                       )}
                     >
                       {n.label}
                       <span
                         className={cn(
-                          "absolute inset-x-4 bottom-1.5 h-[3px] origin-left rounded-full bg-brand transition-transform duration-300",
+                          "absolute inset-x-2.5 bottom-1.5 h-[3px] origin-left rounded-full bg-brand transition-transform duration-300 xl:inset-x-3.5",
                           isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
                         )}
                       />

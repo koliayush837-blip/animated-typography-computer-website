@@ -269,8 +269,11 @@ export const NAV = [
 
 export const PAGE_NAV = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
   { href: "/services", label: "Services" },
+  { href: "/products", label: "Products" },
+  { href: "/why", label: "Why Us" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

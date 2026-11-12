@@ -68,7 +68,7 @@ export default function Services({ limit, showEnquireLink = false, sectionNo = "
   const services = limit ? allServices.slice(0, limit) : allServices;
 
   return (
-    <section id="services" className="relative px-4 pb-20 pt-16 sm:pb-28 sm:pt-24 md:px-8 md:pt-32">
+    <section id="services" className="relative px-4 pb-20 pt-20 sm:pb-24 sm:pt-24 md:px-8 md:pt-28">
       <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <SectionHead
@@ -77,10 +77,10 @@ export default function Services({ limit, showEnquireLink = false, sectionNo = "
             title="Services"
             tone="navy"
             sub="From a cracked screen to a custom-built desktop, our technicians handle it on the bench, not in a back room."
-            className="mb-6 md:mb-12"
+            className="mb-4 md:mb-6"
           />
 
-          <div className="mb-8 flex items-center gap-2 md:mb-12">
+          <div className="mb-5 flex items-center gap-2 md:mb-6">
             <button
               onClick={() => setIsAdminOpen(true)}
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy/20 bg-paper px-4 py-2.5 text-xs font-bold text-navy shadow-sm transition-all hover:bg-navy hover:text-white"

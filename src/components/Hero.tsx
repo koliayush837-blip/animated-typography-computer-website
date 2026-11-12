@@ -335,20 +335,6 @@ export default function Hero({ instant = false }: { instant?: boolean }) {
           </div>
         </div>
       </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: START + 2.4 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-navy/60 lg:flex"
-      >
-        Scroll
-        <motion.span
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6 }}
-          className="h-8 w-[2px] bg-navy/50"
-        />
-      </motion.div>
     </section>
   );
 }

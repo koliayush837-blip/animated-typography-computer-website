@@ -1,6 +1,5 @@
 import Hero from "../components/Hero";
 import Brands from "../components/Brands";
-import Products from "../components/Products";
 import SEOHead from "../components/SEOHead";
 import { useData } from "../context/DataContext";
 
@@ -16,7 +15,6 @@ export default function HomePage({ instantHero = false }: { instantHero?: boolea
       />
       <Hero instant={instantHero} />
       <Brands />
-      <Products mode="featured" sectionNo="01" />
     </>
   );
 }
