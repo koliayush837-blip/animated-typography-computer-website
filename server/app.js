@@ -100,6 +100,32 @@ export function createExpressApp() {
   });
 
   // -------------------------------------------------------------
+  // Public Endpoint: Submit Contact Enquiry
+  // -------------------------------------------------------------
+  app.post("/api/enquiries", (req, res) => {
+    const ip = getClientIp(req);
+    const { name, phone, topic, message } = req.body || {};
+    if (!name || !phone || !message) {
+      return res.status(400).json({ success: false, error: "Name, phone, and message are required" });
+    }
+    const cleanName = String(name).trim().slice(0, 80);
+    const cleanPhone = String(phone).trim().slice(0, 30);
+    const cleanTopic = String(topic || "General Enquiry").trim().slice(0, 60);
+    const cleanMessage = String(message).trim().slice(0, 500);
+
+    logActivity(
+      "CUSTOMER_ENQUIRY",
+      `${cleanName} (${cleanPhone}) [${cleanTopic}]: ${cleanMessage}`,
+      ip,
+    );
+
+    return res.json({
+      success: true,
+      message: "Enquiry received! Our team will contact you shortly.",
+    });
+  });
+
+  // -------------------------------------------------------------
   // Auth Endpoints
   // -------------------------------------------------------------
   app.post("/api/auth/login", (req, res) => {
@@ -213,7 +239,7 @@ export function createExpressApp() {
   // Protected Products Management
   // -------------------------------------------------------------
   app.post("/api/products", requireAdmin, (req, res) => {
-    const { categoryId, name, price, tag, image, stockStatus } = req.body;
+    const { categoryId, name, price, tag, image, stockStatus, description, specs, featured } = req.body;
     const ip = getClientIp(req);
 
     if (!categoryId || !name || typeof name !== "string" || !name.trim()) {
@@ -233,6 +259,9 @@ export function createExpressApp() {
       image: image ? String(image).trim() : undefined,
       inStock: stockStatus !== "out_of_stock",
       stockStatus: stockStatus || "in_stock",
+      description: description ? String(description).trim() : undefined,
+      specs: Array.isArray(specs) ? specs.map((s) => String(s).trim()).filter(Boolean) : undefined,
+      featured: Boolean(featured),
     };
 
     category.items.unshift(item);
@@ -245,7 +274,7 @@ export function createExpressApp() {
   app.put("/api/products/:catId/:index", requireAdmin, (req, res) => {
     const { catId, index } = req.params;
     const idx = parseInt(index, 10);
-    const { name, price, tag, image, stockStatus } = req.body;
+    const { name, price, tag, image, stockStatus, description, specs, featured } = req.body;
     const ip = getClientIp(req);
 
     if (!name || typeof name !== "string" || !name.trim()) {
@@ -267,6 +296,9 @@ export function createExpressApp() {
       image: image ? String(image).trim() : undefined,
       inStock: stockStatus !== "out_of_stock",
       stockStatus: stockStatus || "in_stock",
+      description: description !== undefined ? (description ? String(description).trim() : undefined) : category.items[idx].description,
+      specs: Array.isArray(specs) ? specs.map((s) => String(s).trim()).filter(Boolean) : category.items[idx].specs,
+      featured: featured !== undefined ? Boolean(featured) : category.items[idx].featured,
     };
 
     saveStoreData(data);

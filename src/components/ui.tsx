@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import { motion, type Variants } from "framer-motion";
 import { cn } from "../utils/cn";
 import { HOURS } from "../data";
+import { useRouter } from "../utils/router";
 
 /* ------------------------------------------------------------------ */
 /* Logo: red + navy "P" with a circuit-style look                      */
@@ -267,9 +268,30 @@ export function PaperButton({
   external?: boolean;
   className?: string;
 }) {
+  const { navigate } = useRouter();
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (
+      external ||
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.altKey ||
+      e.ctrlKey ||
+      e.shiftKey
+    ) {
+      return;
+    }
+    if (href.startsWith("/") || href.startsWith("#")) {
+      e.preventDefault();
+      navigate(href);
+    }
+  };
+
   return (
     <motion.a
       href={href}
+      onClick={handleClick}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer" : undefined}
       whileHover={{ y: -4, rotate: -1.2 }}

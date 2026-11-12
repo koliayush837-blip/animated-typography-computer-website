@@ -648,7 +648,40 @@ export type Item = {
   image?: string;
   inStock?: boolean;
   stockStatus?: "in_stock" | "low_stock" | "out_of_stock" | "on_order";
+  slug?: string;
+  description?: string;
+  specs?: string[];
+  featured?: boolean;
 };
+
+export function getProductSlug(item: { name: string; slug?: string }, categoryId?: string): string {
+  if (item.slug && item.slug.trim()) return item.slug.trim();
+  const cleanName = item.name
+    .toLowerCase()
+    .replace(/["']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (cleanName) return cleanName;
+  return categoryId ? \`\${categoryId}-item\` : "product";
+}
+
+export function findProductBySlug(
+  catalog: { id: string; label: string; items: Item[] }[],
+  slug: string,
+): { item: Item; category: { id: string; label: string; items: Item[] }; index: number } | null {
+  const normalized = slug.toLowerCase().trim();
+  for (const category of catalog) {
+    for (let i = 0; i < category.items.length; i++) {
+      const item = category.items[i];
+      const itemSlug = getProductSlug(item, category.id);
+      const prefixedSlug = \`\${category.id}-\${itemSlug}\`;
+      if (itemSlug === normalized || prefixedSlug === normalized) {
+        return { item, category, index: i };
+      }
+    }
+  }
+  return null;
+}
 
 export const CATALOG: { id: string; label: string; items: Item[] }[] = ${JSON.stringify(data.catalog, null, 2)};
 
@@ -657,6 +690,14 @@ export const REVIEWS = ${JSON.stringify(data.reviews, null, 2)};
 export const GALLERY = ${JSON.stringify(data.gallery || DEFAULT_GALLERY, null, 2)};
 
 export const NAV = ${JSON.stringify(DEFAULT_NAV, null, 2)};
+
+export const PAGE_NAV = [
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
 `;
   };
 

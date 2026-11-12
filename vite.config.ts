@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
+// @ts-expect-error JS server middleware module
 import { createApiMiddleware } from "./server/middleware.js";
 
 const __filename = fileURLToPath(import.meta.url);

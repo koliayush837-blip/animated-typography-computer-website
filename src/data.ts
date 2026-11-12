@@ -12,6 +12,13 @@ export const BIZ = {
     "https://www.google.com/maps/dir/?api=1&destination=Padmashree+Computers+Ashoka+Nagar+Kharadi+Pune",
   mapEmbed:
     "https://www.google.com/maps?q=Padmashree+Computers,+Ashoka+Nagar,+Kharadi,+Pune+411014&output=embed",
+  heroEyebrow: "Computer store · Kharadi, Pune",
+  heroTitle1: "Your",
+  heroTitle2: "Technology",
+  heroTitle3: "Partner",
+  heroLocation: "in Kharadi, Pune",
+  heroDescription:
+    "New and refurbished laptops, expert repairs, upgrades and accessories, all under one roof.",
 };
 
 export const WA_LINK = `https://wa.me/${BIZ.whatsapp}?text=${encodeURIComponent(
@@ -89,7 +96,40 @@ export type Item = {
   image?: string;
   inStock?: boolean;
   stockStatus?: "in_stock" | "low_stock" | "out_of_stock" | "on_order";
+  slug?: string;
+  description?: string;
+  specs?: string[];
+  featured?: boolean;
 };
+
+export function getProductSlug(item: { name: string; slug?: string }, categoryId?: string): string {
+  if (item.slug && item.slug.trim()) return item.slug.trim();
+  const cleanName = item.name
+    .toLowerCase()
+    .replace(/["']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (cleanName) return cleanName;
+  return categoryId ? `${categoryId}-item` : "product";
+}
+
+export function findProductBySlug(
+  catalog: { id: string; label: string; items: Item[] }[],
+  slug: string,
+): { item: Item; category: { id: string; label: string; items: Item[] }; index: number } | null {
+  const normalized = slug.toLowerCase().trim();
+  for (const category of catalog) {
+    for (let i = 0; i < category.items.length; i++) {
+      const item = category.items[i];
+      const itemSlug = getProductSlug(item, category.id);
+      const prefixedSlug = `${category.id}-${itemSlug}`;
+      if (itemSlug === normalized || prefixedSlug === normalized) {
+        return { item, category, index: i };
+      }
+    }
+  }
+  return null;
+}
 
 export const CATALOG: { id: string; label: string; items: Item[] }[] = [
   {
@@ -225,4 +265,12 @@ export const NAV = [
   { href: "#reviews", label: "Reviews" },
   { href: "#gallery", label: "Gallery" },
   { href: "#contact", label: "Contact" },
+];
+
+export const PAGE_NAV = [
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];

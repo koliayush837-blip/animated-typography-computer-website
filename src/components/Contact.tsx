@@ -1,9 +1,15 @@
-import { Clock, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import { useState } from "react";
+import { Clock, MapPin, MessageCircle, Navigation, Phone, Send, CheckCircle2 } from "lucide-react";
 import { PaperButton, Reveal, SectionHead, Torn, useOpenStatus } from "./ui";
 import { cn } from "../utils/cn";
 import { useData } from "../context/DataContext";
 
-export default function Contact() {
+interface ContactProps {
+  sectionNo?: string;
+  showForm?: boolean;
+}
+
+export default function Contact({ sectionNo = "06", showForm = true }: ContactProps) {
   const { data } = useData();
   const biz = data.biz;
   const hours = data.hours;
@@ -14,12 +20,48 @@ export default function Contact() {
   const status = useOpenStatus();
   const todayIdx = status.isSunday ? 1 : 0;
 
+  // Enquiry Form State
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [topic, setTopic] = useState("Laptop / Desktop Repair");
+  const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleEnquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim() || !message.trim()) return;
+
+    setSubmitting(true);
+    try {
+      await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: phone.trim(),
+          topic,
+          message: message.trim(),
+        }),
+      });
+    } catch {
+      // Proceed to WhatsApp even if offline
+    } finally {
+      setSubmitting(false);
+      setSubmitted(true);
+    }
+
+    const customWaText = `Hello ${biz.name},\n\n*New Website Enquiry*\n• *Name:* ${name.trim()}\n• *Phone:* ${phone.trim()}\n• *Topic:* ${topic}\n• *Message:* ${message.trim()}`;
+    const customWaUrl = `https://wa.me/${biz.whatsapp}?text=${encodeURIComponent(customWaText)}`;
+    window.open(customWaUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section id="contact" className="relative px-4 pb-36 pt-16 sm:pt-24 md:px-8 md:pt-32">
       <Torn fill="#f5efe3" seed={79} position="top" />
       <div className="mx-auto max-w-[1400px]">
         <SectionHead
-          no="06"
+          no={sectionNo}
           eyebrow="Find us"
           title="Visit us"
           tone="red"
@@ -141,6 +183,129 @@ export default function Contact() {
             </div>
           </Reveal>
         </div>
+
+        {/* Contact Enquiry Form */}
+        {showForm && (
+          <Reveal y={50} delay={0.2} className="mt-14 sm:mt-20">
+            <div className="drop">
+              <div className="fold-clip paper-bg relative p-6 sm:p-8 md:p-12">
+                <span className="tape absolute -top-3 left-1/2 h-7 w-28 -translate-x-1/2 rotate-2" />
+                <div className="max-w-2xl">
+                  <span className="rounded-sm bg-navy px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                    Direct Enquiry
+                  </span>
+                  <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-navy sm:text-4xl">
+                    Send Us an Enquiry
+                  </h3>
+                  <p className="mt-2 font-serif text-lg italic text-navy/75 sm:text-xl">
+                    Looking for a specific laptop model, spare part, or repair estimate? Fill out the note below and we'll get right back to you.
+                  </p>
+                </div>
+
+                {submitted && (
+                  <div className="mt-6 flex items-center gap-3 rounded-xl border-2 border-emerald-600/30 bg-emerald-50 p-4 text-sm font-bold text-emerald-900">
+                    <CheckCircle2 size={20} className="shrink-0 text-emerald-600" />
+                    <span>
+                      Your enquiry has been logged and opened in WhatsApp for instant response. You can also call us directly at{" "}
+                      <a href={`tel:${biz.phoneTel}`} className="underline">
+                        {biz.phoneDisplay}
+                      </a>
+                      .
+                    </span>
+                  </div>
+                )}
+
+                <form onSubmit={handleEnquirySubmit} className="mt-8 grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Rahul Sharma"
+                      className="mt-2 w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                      Phone / WhatsApp Number *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="e.g. 98765 43210"
+                      className="mt-2 w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                      What do you need help with?
+                    </label>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {[
+                        "Laptop / Desktop Repair",
+                        "New / Refurbished Laptop",
+                        "RAM / SSD Upgrade",
+                        "Screen / Battery Replacement",
+                        "Laptop / PC Rental",
+                        "Printers & Accessories",
+                      ].map((t) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => setTopic(t)}
+                          className={cn(
+                            "rounded-lg px-3.5 py-2 text-xs font-bold transition-all",
+                            topic === t
+                              ? "bg-navy text-white shadow-[0_3px_0_#050b22]"
+                              : "border border-navy/20 bg-paper-light text-navy hover:border-brand",
+                          )}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                      Message / Device Details *
+                    </label>
+                    <textarea
+                      required
+                      rows={3}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Tell us your laptop model, issue, or the product you are looking for..."
+                      className="mt-2 w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2 flex flex-wrap items-center gap-4 pt-2">
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-brand px-6 py-4 text-base font-bold text-white shadow-[0_5px_0_#8f1020,0_12px_20px_rgba(143,16,32,.35)] transition-all hover:-translate-y-0.5 active:translate-y-1 disabled:opacity-60"
+                    >
+                      <Send size={18} />
+                      {submitting ? "Sending..." : "Send Enquiry & Open WhatsApp"}
+                    </button>
+                    <span className="font-mono text-xs text-navy/60">
+                      Or call directly: <strong className="text-navy">{biz.phoneDisplay}</strong>
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

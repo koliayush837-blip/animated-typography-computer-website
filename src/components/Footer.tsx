@@ -1,7 +1,8 @@
-import { NAV } from "../data";
+import { PAGE_NAV } from "../data";
 import { Logo, PaperText, Torn } from "./ui";
 import { useData } from "../context/DataContext";
 import { Lock, Shield } from "lucide-react";
+import { Link } from "../utils/router";
 
 export default function Footer() {
   const { data, setIsAdminOpen, isAdminAuthenticated } = useData();
@@ -33,11 +34,11 @@ export default function Footer() {
           <div>
             <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-brand">Explore</h4>
             <ul className="grid grid-cols-2 gap-2 text-sm font-semibold">
-              {NAV.map((n) => (
+              {PAGE_NAV.map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="text-paper/80 transition-colors hover:text-white">
+                  <Link to={n.href} className="text-paper/80 transition-colors hover:text-white">
                     {n.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
               <li>

@@ -17,12 +17,9 @@ import {
   Copy,
   Check,
   Search,
-  Tag,
-  Phone,
   Layers,
   Key,
   Star,
-  ExternalLink,
   Laptop,
   Cpu,
   BatteryCharging,
@@ -40,15 +37,12 @@ import {
   Activity,
   CheckCircle2,
   AlertTriangle,
-  Clock,
-  XCircle,
 } from "lucide-react";
 import {
   useData,
   type Item,
   type ServiceItem,
   type GalleryItem,
-  type ReviewItem,
 } from "../context/DataContext";
 import { cn } from "../utils/cn";
 
@@ -140,6 +134,8 @@ export default function AdminModal() {
     image: "",
     inStock: true,
     stockStatus: "in_stock",
+    description: "",
+    featured: false,
     categoryId: data.catalog[0]?.id || "laptops",
   });
   const [showAddProductModal, setShowAddProductModal] = useState(false);
@@ -303,6 +299,8 @@ export default function AdminModal() {
       image: newProduct.image?.trim() || undefined,
       inStock: newProduct.stockStatus !== "out_of_stock",
       stockStatus: newProduct.stockStatus,
+      description: newProduct.description?.trim() || undefined,
+      featured: Boolean(newProduct.featured),
     });
 
     if (res.success) {
@@ -313,6 +311,8 @@ export default function AdminModal() {
         image: "",
         inStock: true,
         stockStatus: "in_stock",
+        description: "",
+        featured: false,
         categoryId: newProduct.categoryId,
       });
       setShowAddProductModal(false);
@@ -1497,11 +1497,47 @@ export default function AdminModal() {
                     />
                   </div>
 
+                  <div className="border-t border-navy/15 pt-4 mt-4 space-y-3">
+                    <h4 className="text-sm font-extrabold text-navy">Homepage Hero Content</h4>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-xs font-mono font-bold uppercase text-navy/70">Hero Eyebrow Badge</label>
+                        <input
+                          type="text"
+                          value={bizForm.heroEyebrow || "Computer store · Kharadi, Pune"}
+                          onChange={(e) => setBizForm({ ...bizForm, heroEyebrow: e.target.value })}
+                          className="mt-1 w-full min-h-[44px] rounded-lg border border-navy/20 bg-white px-3 py-2 text-sm font-bold text-navy outline-none focus:border-brand"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-mono font-bold uppercase text-navy/70">Hero Location Text</label>
+                        <input
+                          type="text"
+                          value={bizForm.heroLocation || "in Kharadi, Pune"}
+                          onChange={(e) => setBizForm({ ...bizForm, heroLocation: e.target.value })}
+                          className="mt-1 w-full min-h-[44px] rounded-lg border border-navy/20 bg-white px-3 py-2 text-sm font-bold text-navy outline-none focus:border-brand"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-mono font-bold uppercase text-navy/70">Homepage Description</label>
+                      <textarea
+                        rows={2}
+                        value={
+                          bizForm.heroDescription ||
+                          "New and refurbished laptops, expert repairs, upgrades and accessories, all under one roof."
+                        }
+                        onChange={(e) => setBizForm({ ...bizForm, heroDescription: e.target.value })}
+                        className="mt-1 w-full rounded-lg border border-navy/20 bg-white px-3 py-2 text-sm font-bold text-navy outline-none focus:border-brand"
+                      />
+                    </div>
+                  </div>
+
                   <button
                     type="submit"
                     className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-brand px-5 py-2.5 text-sm font-extrabold text-white shadow-[0_3px_0_#8f1020]"
                   >
-                    <Save size={16} /> Save Store Details
+                    <Save size={16} /> Save Store &amp; Homepage Details
                   </button>
                 </form>
               )}
@@ -1971,6 +2007,31 @@ export default function AdminModal() {
                   )}
                 </div>
 
+                <div>
+                  <label className="block text-xs font-mono font-bold uppercase text-navy/70">
+                    Description / Key Specifications (Optional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={newProduct.description || ""}
+                    onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                    placeholder="Processor, RAM, storage, warranty, or key features..."
+                    className="mt-1 w-full rounded-lg border border-navy/20 bg-white px-3 py-2 text-sm text-navy outline-none focus:border-brand"
+                  />
+                </div>
+
+                <label className="flex items-center gap-2.5 rounded-lg border border-navy/15 bg-white p-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(newProduct.featured)}
+                    onChange={(e) => setNewProduct({ ...newProduct, featured: e.target.checked })}
+                    className="h-4 w-4 accent-brand"
+                  />
+                  <span className="text-xs font-bold text-navy">
+                    Feature this product on the Homepage showcase
+                  </span>
+                </label>
+
                 <div className="mt-5 flex gap-2 pt-2 border-t border-navy/10">
                   <button
                     type="submit"
@@ -2116,6 +2177,41 @@ export default function AdminModal() {
                     </div>
                   )}
                 </div>
+
+                <div>
+                  <label className="block text-xs font-mono font-bold uppercase text-navy/70">
+                    Description / Key Specifications (Optional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={editingProduct.item.description || ""}
+                    onChange={(e) =>
+                      setEditingProduct({
+                        ...editingProduct,
+                        item: { ...editingProduct.item, description: e.target.value },
+                      })
+                    }
+                    placeholder="Processor, RAM, storage, warranty, or key features..."
+                    className="mt-1 w-full rounded-lg border border-navy/20 bg-white px-3 py-2 text-sm text-navy outline-none focus:border-brand"
+                  />
+                </div>
+
+                <label className="flex items-center gap-2.5 rounded-lg border border-navy/15 bg-white p-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(editingProduct.item.featured)}
+                    onChange={(e) =>
+                      setEditingProduct({
+                        ...editingProduct,
+                        item: { ...editingProduct.item, featured: e.target.checked },
+                      })
+                    }
+                    className="h-4 w-4 accent-brand"
+                  />
+                  <span className="text-xs font-bold text-navy">
+                    Feature this product on the Homepage showcase
+                  </span>
+                </label>
 
                 <div className="mt-5 flex gap-2 pt-2 border-t border-navy/10">
                   <button

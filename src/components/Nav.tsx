@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { Menu, Phone, X, Shield, Lock } from "lucide-react";
-import { NAV } from "../data";
+import { PAGE_NAV } from "../data";
 import { Logo } from "./ui";
 import { cn } from "../utils/cn";
 import { useData } from "../context/DataContext";
+import { Link, useRouter } from "../utils/router";
 
 export default function Nav() {
   const { data, setIsAdminOpen, isAdminAuthenticated } = useData();
+  const { pathname } = useRouter();
   const biz = data.biz;
 
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +40,7 @@ export default function Nav() {
         )}
       >
         <nav className="flex items-center justify-between gap-3 px-4 py-3 md:px-8">
-          <a href="#top" className="flex min-w-0 items-center gap-2 sm:gap-3" aria-label="Padmashree Computers home">
+          <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-3" aria-label="Padmashree Computers home">
             <Logo className="h-9 w-9 shrink-0 drop-shadow-md sm:h-10 sm:w-10" />
             <span className="min-w-0 leading-none">
               <span className="block truncate text-lg font-extrabold tracking-tight text-navy sm:text-xl">{biz.name.split(" ")[0]}</span>
@@ -46,20 +48,31 @@ export default function Nav() {
                 {biz.name.split(" ").slice(1).join(" ") || "Computers"}
               </span>
             </span>
-          </a>
+          </Link>
 
           <ul className="hidden items-center gap-1 lg:flex">
-            {NAV.map((n) => (
-              <li key={n.href}>
-                <a
-                  href={n.href}
-                  className="group relative rounded-md px-4 py-2 text-sm font-semibold text-navy transition-colors hover:text-brand"
-                >
-                  {n.label}
-                  <span className="absolute inset-x-4 bottom-1 h-[3px] origin-left scale-x-0 rounded-full bg-brand transition-transform duration-300 group-hover:scale-x-100" />
-                </a>
-              </li>
-            ))}
+            {PAGE_NAV.map((n) => {
+              const isActive = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
+              return (
+                <li key={n.href}>
+                  <Link
+                    to={n.href}
+                    className={cn(
+                      "group relative rounded-md px-4 py-2 text-sm font-semibold transition-colors hover:text-brand",
+                      isActive ? "text-brand font-extrabold" : "text-navy",
+                    )}
+                  >
+                    {n.label}
+                    <span
+                      className={cn(
+                        "absolute inset-x-4 bottom-1 h-[3px] origin-left rounded-full bg-brand transition-transform duration-300",
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                      )}
+                    />
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="flex items-center gap-2">
@@ -120,22 +133,28 @@ export default function Nav() {
                 </a>
               </motion.li>
 
-              {NAV.map((n, i) => (
-                <motion.li
-                  key={n.href}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <a
-                    href={n.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-4 py-3 text-lg font-bold text-navy hover:bg-brand hover:text-white"
+              {PAGE_NAV.map((n, i) => {
+                const isActive = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
+                return (
+                  <motion.li
+                    key={n.href}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
                   >
-                    {n.label}
-                  </a>
-                </motion.li>
-              ))}
+                    <Link
+                      to={n.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "block rounded-lg px-4 py-3 text-lg font-bold transition-colors",
+                        isActive ? "bg-navy text-white" : "text-navy hover:bg-brand hover:text-white",
+                      )}
+                    >
+                      {n.label}
+                    </Link>
+                  </motion.li>
+                );
+              })}
 
               <motion.li
                 initial={{ opacity: 0, x: -30 }}
