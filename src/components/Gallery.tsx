@@ -34,7 +34,7 @@ export default function Gallery() {
           <div className="mb-8 flex items-center gap-2 md:mb-12">
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/30 bg-paper-light/10 px-3.5 py-2 text-xs font-bold text-white shadow-sm backdrop-blur transition-all hover:bg-white hover:text-navy"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-white/30 bg-paper-light/10 px-4 py-2.5 text-xs font-bold text-white shadow-sm backdrop-blur transition-all hover:bg-white hover:text-navy"
             >
               <ImageIcon size={14} />
               {isAdminAuthenticated ? "Manage Gallery Photos" : "Gallery Admin"}

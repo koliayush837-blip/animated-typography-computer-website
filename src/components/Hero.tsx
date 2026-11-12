@@ -237,19 +237,19 @@ export default function Hero({ instant = false }: { instant?: boolean }) {
         </h1>
 
         <div aria-hidden="true" className="flex items-end justify-between gap-4">
-          <PaperText text={BIZ.heroTitle1 || "Your"} tone="navy" delay={START} className="text-[clamp(2.6rem,12vw,12rem)]" />
+          <PaperText text={BIZ.heroTitle1 || "Your"} tone="navy" delay={START} className="text-[clamp(2.15rem,11.5vw,12rem)]" />
           <div className="mb-2 hidden sm:block">
             <SpinBadge start={START} />
           </div>
         </div>
-        <PaperText text={BIZ.heroTitle2 || "Technology"} tone="red" delay={START + 0.25} className="text-[clamp(2.15rem,11vw,11.5rem)]" />
+        <PaperText text={BIZ.heroTitle2 || "Technology"} tone="red" delay={START + 0.25} className="text-[clamp(1.75rem,10.2vw,11.5rem)]" />
         <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
-          <PaperText text={BIZ.heroTitle3 || "Partner"} tone="navy" delay={START + 0.75} className="text-[clamp(2.4rem,12vw,12rem)]" />
+          <PaperText text={BIZ.heroTitle3 || "Partner"} tone="navy" delay={START + 0.75} className="text-[clamp(2.05rem,11.5vw,12rem)]" />
           <motion.span
             initial={{ opacity: 0, x: -40, rotate: -6 }}
             animate={{ opacity: 1, x: 0, rotate: -3 }}
             transition={{ delay: START + 1.5, type: "spring", stiffness: 70 }}
-            className="relative mb-2 font-serif text-[clamp(1.45rem,5vw,4.2rem)] italic leading-none text-navy"
+            className="relative mb-2 font-serif text-[clamp(1.35rem,4.8vw,4.2rem)] italic leading-none text-navy"
           >
             {BIZ.heroLocation || "in Kharadi, Pune"}
             <motion.svg
@@ -271,7 +271,7 @@ export default function Hero({ instant = false }: { instant?: boolean }) {
           </motion.span>
         </div>
 
-        <div className="mt-8 grid items-end gap-8 sm:mt-12 md:gap-12 lg:grid-cols-[1.1fr_1fr]">
+        <div className="mt-7 grid items-end gap-7 sm:mt-12 md:gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -286,7 +286,7 @@ export default function Hero({ instant = false }: { instant?: boolean }) {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: START + 1.4, type: "spring", stiffness: 80 }}
-              className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4"
+              className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-8 sm:flex sm:flex-row sm:flex-wrap sm:gap-4"
             >
               <PaperButton href="/products" tone="navy" icon={<ArrowRight size={20} />} className="w-full sm:w-auto">
                 Explore Products

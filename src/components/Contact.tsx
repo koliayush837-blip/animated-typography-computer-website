@@ -74,13 +74,13 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
               <div className="fold-clip paper-bg relative space-y-8 p-5 sm:p-7 md:p-10">
                 <span className="tape absolute top-0 left-10 h-7 w-24 -rotate-3" />
 
-                <div className="flex gap-4">
+                <div className="flex gap-3.5 sm:gap-4">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-navy text-white shadow-[0_4px_0_#050b22]">
                     <MapPin size={22} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand">Address</h3>
-                    <address className="mt-1 text-base font-bold not-italic leading-snug text-navy sm:text-lg">
+                    <address className="mt-1 break-words text-base font-bold not-italic leading-snug text-navy sm:text-lg">
                       {biz.name}
                       <br />
                       {biz.address}
@@ -88,13 +88,13 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
                   </div>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex gap-3.5 sm:gap-4">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-brand text-white shadow-[0_4px_0_#8f1020]">
                     <Phone size={22} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand">Call</h3>
-                    <a href={`tel:${biz.phoneTel}`} className="mt-1 block text-2xl font-extrabold tracking-tight text-navy transition-colors hover:text-brand sm:text-3xl">
+                    <a href={`tel:${biz.phoneTel}`} className="mt-1 block break-words text-xl font-extrabold tracking-tight text-navy transition-colors hover:text-brand sm:text-3xl">
                       {biz.phoneDisplay}
                     </a>
                     {biz.altPhoneDisplay && (
@@ -105,17 +105,17 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
                   </div>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex gap-3.5 sm:gap-4">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-[#1f9d55] text-white shadow-[0_4px_0_#0f6b37]">
                     <MessageCircle size={22} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand">WhatsApp</h3>
                     <a
                       href={waLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-1 inline-block text-xl font-extrabold text-navy transition-colors hover:text-brand sm:text-2xl"
+                      className="mt-1 inline-block break-words text-xl font-extrabold text-navy transition-colors hover:text-brand sm:text-2xl"
                     >
                       +{biz.whatsapp}
                     </a>
@@ -164,7 +164,7 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
             <div className="drop h-full">
               <div className="paper-bg relative flex h-full flex-col overflow-hidden rounded-md border-4 border-white p-3 shadow-inner sm:p-4">
                 <span className="tape absolute -top-1 right-12 z-10 h-7 w-28 rotate-6" />
-                <div className="relative min-h-[360px] flex-1 overflow-hidden rounded">
+                <div className="relative min-h-[280px] flex-1 overflow-hidden rounded sm:min-h-[360px]">
                   <iframe
                     title="Map of Padmashree Computers"
                     src={biz.mapEmbed}
@@ -175,7 +175,7 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
                 </div>
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-2 px-1 text-xs font-bold text-navy/70">
                   <span>Downtown Rd, Kharadi, Pune 411014</span>
-                  <a href={biz.directions} target="_blank" rel="noreferrer" className="text-brand hover:underline">
+                  <a href={biz.directions} target="_blank" rel="noreferrer" className="inline-flex min-h-[36px] items-center text-brand hover:underline">
                     Open in Google Maps →
                   </a>
                 </div>
@@ -217,30 +217,32 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
 
                 <form onSubmit={handleEnquirySubmit} className="mt-8 grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                    <label htmlFor="enquiry-name" className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
                       Your Name *
                     </label>
                     <input
+                      id="enquiry-name"
                       type="text"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Rahul Sharma"
-                      className="mt-2 w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
+                      className="mt-2 min-h-[48px] w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                    <label htmlFor="enquiry-phone" className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
                       Phone / WhatsApp Number *
                     </label>
                     <input
+                      id="enquiry-phone"
                       type="tel"
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="e.g. 98765 43210"
-                      className="mt-2 w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
+                      className="mt-2 min-h-[48px] w-full rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-3 text-sm font-bold text-navy placeholder:font-normal placeholder:text-navy/40 focus:border-brand focus:outline-none"
                     />
                   </div>
 
@@ -262,7 +264,7 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
                           type="button"
                           onClick={() => setTopic(t)}
                           className={cn(
-                            "rounded-lg px-3.5 py-2 text-xs font-bold transition-all",
+                            "min-h-[44px] rounded-lg px-3.5 py-2 text-xs font-bold transition-all",
                             topic === t
                               ? "bg-navy text-white shadow-[0_3px_0_#050b22]"
                               : "border border-navy/20 bg-paper-light text-navy hover:border-brand",
@@ -275,10 +277,11 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
+                    <label htmlFor="enquiry-message" className="block font-mono text-xs font-bold uppercase tracking-wider text-navy">
                       Message / Device Details *
                     </label>
                     <textarea
+                      id="enquiry-message"
                       required
                       rows={3}
                       value={message}
@@ -292,7 +295,7 @@ export default function Contact({ sectionNo = "06", showForm = true }: ContactPr
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-brand px-6 py-4 text-base font-bold text-white shadow-[0_5px_0_#8f1020,0_12px_20px_rgba(143,16,32,.35)] transition-all hover:-translate-y-0.5 active:translate-y-1 disabled:opacity-60"
+                      className="inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-xl bg-brand px-6 py-3.5 text-base font-bold text-white shadow-[0_5px_0_#8f1020,0_12px_20px_rgba(143,16,32,.35)] transition-all hover:-translate-y-0.5 active:translate-y-1 disabled:opacity-60 sm:w-auto"
                     >
                       <Send size={18} />
                       {submitting ? "Sending..." : "Send Enquiry & Open WhatsApp"}

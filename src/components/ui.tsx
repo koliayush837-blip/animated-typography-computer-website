@@ -223,7 +223,7 @@ export function SectionHead({
         as="h2"
         text={title}
         tone={tone}
-        className="text-[clamp(2.15rem,8.5vw,8rem)]"
+        className="text-[clamp(1.85rem,8vw,8rem)]"
       />
       {sub && (
         <Reveal delay={0.2} y={30}>
@@ -298,7 +298,7 @@ export function PaperButton({
       whileTap={{ y: 3, scale: 0.98 }}
       transition={{ type: "spring", stiffness: 350, damping: 18 }}
       className={cn(
-        "inline-flex items-center justify-center gap-2.5 rounded-xl px-5 py-3.5 text-base font-bold tracking-tight transition-shadow sm:px-6 sm:py-4",
+        "inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-xl px-5 py-3.5 text-base font-bold tracking-tight transition-shadow sm:px-6 sm:py-4",
         btnTones[tone],
         className,
       )}

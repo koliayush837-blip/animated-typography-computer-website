@@ -527,8 +527,8 @@ export default function AdminModal() {
         className="relative z-10 flex h-full max-h-[96vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl bg-paper-light shadow-[0_25px_60px_rgba(8,18,47,0.5)] border-2 border-navy/20"
       >
         {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b-2 border-navy/15 bg-paper px-3.5 py-3 sm:px-6">
-          <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="flex items-center justify-between gap-2 border-b-2 border-navy/15 bg-paper px-3 py-2.5 sm:px-6 sm:py-3">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             {/* Mobile Hamburger Drawer Toggle */}
             {isAdminAuthenticated && (
               <button
@@ -540,17 +540,19 @@ export default function AdminModal() {
               </button>
             )}
 
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-navy text-white shadow-[0_2px_0_#050b22]">
+            <span className="hidden h-10 w-10 shrink-0 place-items-center rounded-xl bg-navy text-white shadow-[0_2px_0_#050b22] min-[380px]:grid">
               <Lock size={18} />
             </span>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-extrabold tracking-tight text-navy sm:text-xl">Store Admin Studio</h2>
-                <span className="rounded bg-brand/10 px-2 py-0.5 font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-brand">
+                <h2 className="truncate text-sm font-extrabold tracking-tight text-navy min-[380px]:text-base sm:text-xl">
+                  Store Admin Studio
+                </h2>
+                <span className="hidden shrink-0 rounded bg-brand/10 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-brand sm:inline-block sm:text-[10px]">
                   Live Production
                 </span>
               </div>
-              <p className="hidden text-[11px] font-mono text-navy/60 sm:block">
+              <p className="hidden font-mono text-[11px] text-navy/60 sm:block">
                 Securely manage products, services, gallery &amp; contact in real time
               </p>
             </div>

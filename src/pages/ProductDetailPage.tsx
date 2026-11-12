@@ -110,13 +110,13 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
             <div className="flex items-center gap-2">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-3.5 py-2 text-xs font-bold text-navy shadow-sm transition-colors hover:bg-navy hover:text-white"
+                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-3.5 py-2 text-xs font-bold text-navy shadow-sm transition-colors hover:bg-navy hover:text-white"
               >
                 <ArrowLeft size={14} /> All Products
               </Link>
               <button
                 onClick={() => setIsAdminOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-3.5 py-2 text-xs font-bold text-navy shadow-sm transition-colors hover:bg-brand hover:text-white"
+                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-3.5 py-2 text-xs font-bold text-navy shadow-sm transition-colors hover:bg-brand hover:text-white"
               >
                 <Settings size={14} />
                 {isAdminAuthenticated ? "Edit Product" : "Admin"}
@@ -127,11 +127,11 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
           {/* Main Product Detail Sheet */}
           <Reveal y={40} rotate={-0.4}>
             <div className="drop">
-              <div className="fold-clip paper-bg relative grid gap-8 p-5 sm:p-8 md:p-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
+              <div className="fold-clip paper-bg relative grid gap-6 p-4 sm:gap-8 sm:p-8 md:p-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
                 <span className="tape absolute -top-3 left-1/2 h-7 w-28 -translate-x-1/2 -rotate-2" />
 
                 {/* Left Column: Polaroid / Paper Framed Product Visual */}
-                <div className="flex flex-col justify-between rounded-md border-2 border-dashed border-navy/20 bg-paper-light p-5 sm:p-8">
+                <div className="flex flex-col justify-between rounded-md border-2 border-dashed border-navy/20 bg-paper-light p-4 sm:p-8">
                   {item.image ? (
                     <div className="overflow-hidden rounded-lg border border-navy/10 bg-white shadow-inner">
                       <img
@@ -141,23 +141,23 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                       />
                     </div>
                   ) : (
-                    <div className="paper-navy-bg relative flex aspect-[4/3] w-full flex-col items-center justify-center overflow-hidden rounded-lg p-6 text-center text-white">
-                      <div className="mb-4 grid h-20 w-20 place-items-center rounded-2xl bg-brand text-white shadow-[0_5px_0_#8f1020]">
-                        <Cpu size={40} />
+                    <div className="paper-navy-bg relative flex aspect-[4/3] w-full flex-col items-center justify-center overflow-hidden rounded-lg p-5 text-center text-white sm:p-6">
+                      <div className="mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-brand text-white shadow-[0_5px_0_#8f1020] sm:mb-4 sm:h-20 sm:w-20">
+                        <Cpu size={36} />
                       </div>
                       <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-white/70">
                         {category.label}
                       </span>
-                      <p className="mt-2 max-w-xs text-lg font-extrabold leading-tight text-white">
+                      <p className="mt-2 max-w-xs break-words text-base font-extrabold leading-tight text-white sm:text-lg">
                         {item.name}
                       </p>
-                      <span className="mt-4 rounded-sm bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/80">
+                      <span className="mt-3 rounded-sm bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/80 sm:mt-4">
                         {biz.name} · Kharadi Bench
                       </span>
                     </div>
                   )}
 
-                  <div className="mt-6 grid grid-cols-2 gap-3 border-t border-navy/10 pt-5 font-mono text-xs">
+                  <div className="mt-5 grid grid-cols-1 gap-2.5 border-t border-navy/10 pt-4 font-mono text-xs min-[380px]:grid-cols-2 sm:mt-6 sm:gap-3 sm:pt-5">
                     <div className="rounded-lg bg-paper p-3">
                       <span className="block text-[10px] uppercase tracking-wider text-navy/60">Store Location</span>
                       <span className="mt-0.5 block font-bold text-navy">Ashoka Nagar, Kharadi</span>
@@ -170,7 +170,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                 </div>
 
                 {/* Right Column: Details, Specs, Price & Conversion CTAs */}
-                <div className="flex flex-col justify-between">
+                <div className="flex min-w-0 flex-col justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="rounded-sm bg-navy px-2.5 py-1 font-mono text-xs font-bold uppercase tracking-widest text-white">
@@ -208,7 +208,7 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                       )}
                     </div>
 
-                    <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl md:text-5xl">
+                    <h1 className="mt-4 break-words text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl md:text-5xl">
                       {item.name}
                     </h1>
 
@@ -256,13 +256,13 @@ export default function ProductDetailPage({ slug }: { slug: string }) {
                   {/* Action Buttons */}
                   <div className="mt-8 border-t-2 border-dashed border-navy/20 pt-6">
                     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                      <PaperButton href={waProductUrl} external tone="green" icon={<MessageCircle size={20} />}>
+                      <PaperButton href={waProductUrl} external tone="green" icon={<MessageCircle size={20} />} className="w-full sm:w-auto">
                         Enquire on WhatsApp
                       </PaperButton>
-                      <PaperButton href={`tel:${biz.phoneTel}`} tone="red" icon={<Phone size={20} />}>
+                      <PaperButton href={`tel:${biz.phoneTel}`} tone="red" icon={<Phone size={20} />} className="w-full sm:w-auto">
                         Call {biz.phoneDisplay}
                       </PaperButton>
-                      <PaperButton href={biz.directions} external tone="navy" icon={<MapPin size={20} />}>
+                      <PaperButton href={biz.directions} external tone="navy" icon={<MapPin size={20} />} className="w-full sm:w-auto">
                         Visit Shop in Kharadi
                       </PaperButton>
                     </div>

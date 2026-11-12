@@ -39,7 +39,7 @@ function Counter() {
     return () => c.stop();
   }, [inView]);
   return (
-    <span ref={ref} className="cut cut-red text-[clamp(5rem,22vw,15rem)]">
+    <span ref={ref} className="cut cut-red text-[clamp(4.2rem,20vw,15rem)]">
       {v.toFixed(1)}
     </span>
   );
@@ -54,7 +54,7 @@ const pillars = [
 
 export default function Why() {
   return (
-    <section id="why" className="relative overflow-hidden bg-navy px-4 pb-20 pt-16 text-white sm:overflow-visible sm:pb-28 sm:pt-24 md:px-8 md:pt-32">
+    <section id="why" className="relative overflow-hidden bg-navy px-4 pb-20 pt-16 text-white sm:pb-28 sm:pt-24 md:px-8 md:pt-32">
       <Torn fill="#0e1c4a" seed={41} position="top" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.07]" aria-hidden="true">
         <svg className="h-full w-full">

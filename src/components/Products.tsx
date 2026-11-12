@@ -12,6 +12,7 @@ import {
   ArrowRight,
   X,
   Sparkles,
+  MessageCircle,
 } from "lucide-react";
 import { PaperButton, Reveal, SectionHead, Torn } from "./ui";
 import { cn } from "../utils/cn";
@@ -55,7 +56,6 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
     if (explicitFeatured.length > 0) {
       return explicitFeatured.slice(0, 6);
     }
-    // Default curated pick across categories (prioritizing priced / popular items)
     const picks: typeof allProducts = [];
     for (const cat of catalog) {
       if (cat.items.length > 0 && picks.length < 6) {
@@ -114,18 +114,18 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
             tone="red"
             sub={
               mode === "featured"
-                ? "Top picks across laptops, monitors, printers and accessories. Click any product for full specifications."
+                ? "Top picks across laptops, monitors, printers and accessories. Tap any product for full specifications."
                 : "Prices as listed. Anything marked 'Call for price' changes with stock, so ring us for today's best rate."
             }
             className="mb-6 md:mb-12"
           />
 
-          <div className="mb-8 flex flex-wrap items-center gap-2 md:mb-12">
+          <div className="mb-6 flex flex-wrap items-center gap-2 md:mb-12">
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-3.5 py-2 text-xs font-bold text-navy shadow-sm transition-all hover:bg-navy hover:text-white"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy/20 bg-paper-light px-4 py-2.5 text-xs font-bold text-navy shadow-sm transition-all hover:bg-navy hover:text-white"
             >
-              <Settings size={14} />
+              <Settings size={15} />
               {isAdminAuthenticated ? "Manage Products & Pricing" : "Store Admin"}
             </button>
           </div>
@@ -134,29 +134,29 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
         {/* Search & Category Filter Controls (Catalog Mode) */}
         {mode === "catalog" && (
           <Reveal y={25}>
-            <div className="mb-6 grid gap-3 md:grid-cols-[1fr_auto]">
-              <div className="relative flex items-center rounded-xl border-2 border-navy/20 bg-paper-light px-4 py-2.5 shadow-[0_3px_0_rgba(14,28,74,.12)] focus-within:border-brand">
-                <Search size={18} className="mr-3 shrink-0 text-navy/50" />
+            <div className="mb-5 grid gap-3 lg:grid-cols-[1fr_auto]">
+              <div className="relative flex min-h-[48px] items-center rounded-xl border-2 border-navy/20 bg-paper-light px-3.5 py-2 shadow-[0_3px_0_rgba(14,28,74,.12)] focus-within:border-brand sm:px-4">
+                <Search size={18} className="mr-2.5 shrink-0 text-navy/50 sm:mr-3" />
                 <input
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search laptops, monitors, printers, accessories..."
                   aria-label="Search products"
-                  className="w-full bg-transparent text-sm font-bold text-navy placeholder:font-medium placeholder:text-navy/45 focus:outline-none sm:text-base"
+                  className="w-full min-w-0 bg-transparent text-sm font-bold text-navy placeholder:font-medium placeholder:text-navy/45 focus:outline-none sm:text-base"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
                     aria-label="Clear search"
-                    className="ml-2 rounded-full p-1 text-navy/50 hover:bg-navy/10 hover:text-navy"
+                    className="ml-2 grid h-8 w-8 shrink-0 place-items-center rounded-full text-navy/50 hover:bg-navy/10 hover:text-navy"
                   >
                     <X size={16} />
                   </button>
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-1.5">
+              <div className="no-scrollbar -mx-4 flex items-center gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                 {[
                   { id: "all", label: "All Stock" },
                   { id: "in_stock", label: "In Stock" },
@@ -167,7 +167,7 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                     key={s.id}
                     onClick={() => setStockFilter(s.id)}
                     className={cn(
-                      "rounded-xl px-3.5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all",
+                      "min-h-[44px] shrink-0 rounded-xl px-3.5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all",
                       stockFilter === s.id
                         ? "bg-brand text-white shadow-[0_3px_0_#8f1020]"
                         : "bg-paper-light/80 text-navy/75 hover:bg-paper-light hover:text-navy",
@@ -183,14 +183,14 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
             <div
               role="tablist"
               aria-label="Product categories"
-              className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto overscroll-x-contain px-4 pb-6 pt-2 snap-x snap-mandatory md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:snap-none"
+              className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto overscroll-x-contain px-4 pb-5 pt-1 snap-x snap-mandatory md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:snap-none"
             >
               <button
                 role="tab"
                 aria-selected={currentActive === "all"}
                 onClick={() => setActive("all")}
                 className={cn(
-                  "relative shrink-0 snap-start rounded-t-lg px-4 py-3 text-sm font-bold tracking-tight transition-colors sm:px-5 md:text-base",
+                  "relative min-h-[44px] shrink-0 snap-start rounded-t-lg px-4 py-2.5 text-sm font-bold tracking-tight transition-colors sm:px-5 md:text-base",
                   currentActive === "all" ? "text-white" : "text-navy hover:text-brand",
                 )}
               >
@@ -216,7 +216,7 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                     aria-selected={on}
                     onClick={() => setActive(c.id)}
                     className={cn(
-                      "relative shrink-0 snap-start rounded-t-lg px-4 py-3 text-sm font-bold tracking-tight transition-colors sm:px-5 md:text-base",
+                      "relative min-h-[44px] shrink-0 snap-start rounded-t-lg px-4 py-2.5 text-sm font-bold tracking-tight transition-colors sm:px-5 md:text-base",
                       on ? "text-white" : "text-navy hover:text-brand",
                     )}
                   >
@@ -251,33 +251,39 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
               show: { transition: { staggerChildren: 0.04 } },
               exit: { transition: { staggerChildren: 0.02 } },
             }}
-            className="mt-6 grid gap-x-7 gap-y-9 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-5 grid grid-cols-1 gap-x-5 gap-y-7 min-[520px]:grid-cols-2 sm:gap-x-7 sm:gap-y-9 lg:grid-cols-3"
           >
             {filteredProducts.map(({ item: it, categoryId, categoryLabel }, i) => {
               const priced = Boolean(it.price);
               const slug = getProductSlug(it, categoryId);
               const detailUrl = `/products/${encodeURIComponent(slug)}`;
+              const waItemUrl = `https://wa.me/${biz.whatsapp}?text=${encodeURIComponent(
+                `Hello ${biz.name}, I'm interested in "${it.name}" (${categoryLabel})${
+                  it.price ? ` listed at ₹${it.price}` : ""
+                }. Is it available?`,
+              )}`;
 
               return (
                 <motion.div
                   key={`${categoryId}-${it.name}-${i}`}
                   variants={{
-                    hidden: { opacity: 0, y: -40, rotate: (i % 2 ? 1 : -1) * 4 },
+                    hidden: { opacity: 0, y: -30, rotate: (i % 2 ? 1 : -1) * 3 },
                     show: {
                       opacity: 1,
                       y: 0,
-                      rotate: [-1.2, 0.8, -0.5][i % 3],
-                      transition: { type: "spring", stiffness: 120, damping: 13 },
+                      rotate: [-1.1, 0.8, -0.5][i % 3],
+                      transition: { type: "spring", stiffness: 120, damping: 14 },
                     },
-                    exit: { opacity: 0, y: 30, transition: { duration: 0.15 } },
+                    exit: { opacity: 0, y: 20, transition: { duration: 0.15 } },
                   }}
+                  className="min-w-0"
                 >
-                  <div className="drop group transition-transform duration-500 hover:-translate-y-2 hover:rotate-0 h-full flex flex-col">
-                    <div className="relative flex flex-1 flex-col overflow-hidden rounded-md paper-bg sm:flex-row">
-                      {/* ticket stub */}
+                  <div className="drop group flex h-full flex-col transition-transform duration-500 hover:-translate-y-2 hover:rotate-0">
+                    <div className="relative flex flex-1 flex-col overflow-hidden rounded-md paper-bg md:flex-row">
+                      {/* Ticket stub spine on tablet/desktop */}
                       <div
                         className={cn(
-                          "relative hidden w-14 shrink-0 items-center justify-center sm:flex",
+                          "relative hidden w-14 shrink-0 items-center justify-center md:flex",
                           priced ? "bg-brand" : "bg-navy",
                         )}
                       >
@@ -288,13 +294,13 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                         </span>
                       </div>
 
-                      <div className="min-w-0 flex-1 border-t-2 sm:border-t-0 sm:border-l-2 border-dashed border-navy/20 p-4 sm:p-5 flex flex-col justify-between">
+                      <div className="flex min-w-0 flex-1 flex-col justify-between border-t-2 border-dashed border-navy/20 p-4 sm:p-5 md:border-l-2 md:border-t-0">
                         <div>
-                          {/* Product Image if present */}
+                          {/* Consistent 4:3 Product Image if present */}
                           {it.image && (
                             <Link
                               to={detailUrl}
-                              className="mb-3.5 block h-36 w-full overflow-hidden rounded-lg bg-navy/5 border border-navy/10"
+                              className="mb-3.5 block aspect-[4/3] w-full overflow-hidden rounded-lg border border-navy/10 bg-navy/5"
                             >
                               <img
                                 src={it.image}
@@ -305,8 +311,8 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                             </Link>
                           )}
 
-                          <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-                            <span className="inline-block sm:hidden rounded-sm bg-navy px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white">
+                          <div className="mb-2.5 flex flex-wrap items-center gap-1.5">
+                            <span className="inline-block rounded-sm bg-navy px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white md:hidden">
                               {categoryLabel}
                             </span>
 
@@ -323,22 +329,22 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                             )}
 
                             {(!it.stockStatus || it.stockStatus === "in_stock") && (
-                              <span className="inline-flex items-center gap-1 rounded-sm bg-emerald-100 text-emerald-800 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                              <span className="inline-flex items-center gap-1 rounded-sm bg-emerald-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-emerald-800">
                                 <CheckCircle2 size={10} /> In Stock
                               </span>
                             )}
                             {it.stockStatus === "low_stock" && (
-                              <span className="inline-flex items-center gap-1 rounded-sm bg-amber-100 text-amber-900 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                              <span className="inline-flex items-center gap-1 rounded-sm bg-amber-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-amber-900">
                                 <AlertTriangle size={10} /> Low Stock
                               </span>
                             )}
                             {it.stockStatus === "out_of_stock" && (
-                              <span className="inline-flex items-center gap-1 rounded-sm bg-red-100 text-red-800 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                              <span className="inline-flex items-center gap-1 rounded-sm bg-red-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-red-800">
                                 <XCircle size={10} /> Out of Stock
                               </span>
                             )}
                             {it.stockStatus === "on_order" && (
-                              <span className="inline-flex items-center gap-1 rounded-sm bg-blue-100 text-blue-900 px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+                              <span className="inline-flex items-center gap-1 rounded-sm bg-blue-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-blue-900">
                                 <Clock size={10} /> On Order
                               </span>
                             )}
@@ -346,7 +352,7 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
 
                           <Link
                             to={detailUrl}
-                            className="block text-lg font-extrabold leading-tight tracking-tight text-navy transition-colors hover:text-brand sm:min-h-[2.8rem] sm:text-xl"
+                            className="block break-words text-lg font-extrabold leading-snug tracking-tight text-navy transition-colors hover:text-brand sm:min-h-[2.8rem] sm:text-xl"
                           >
                             {it.name}
                           </Link>
@@ -358,27 +364,39 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                           )}
                         </div>
 
-                        <div className="mt-4 flex flex-wrap items-end justify-between gap-2 pt-3 border-t border-navy/10">
+                        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-navy/10 pt-3">
                           {priced ? (
                             <p className="flex items-start font-extrabold text-brand">
-                              <span className="mr-1 mt-1 text-lg">₹</span>
-                              <span className="text-3xl tracking-tight sm:text-4xl">{it.price}</span>
+                              <span className="mr-1 mt-1 text-base sm:text-lg">₹</span>
+                              <span className="text-2xl tracking-tight sm:text-3xl md:text-4xl">{it.price}</span>
                             </p>
                           ) : (
                             <a
                               href={`tel:${biz.phoneTel}`}
-                              className="inline-flex items-center gap-2 rounded-md bg-navy/5 px-3 py-2 text-sm font-bold text-navy transition-colors hover:bg-brand hover:text-white"
+                              className="inline-flex min-h-[44px] items-center gap-2 rounded-lg bg-navy/10 px-3.5 py-2 text-xs font-extrabold text-navy transition-colors hover:bg-brand hover:text-white sm:text-sm"
                             >
                               <Phone size={14} /> Call for price
                             </a>
                           )}
 
-                          <Link
-                            to={detailUrl}
-                            className="inline-flex items-center gap-1 font-mono text-xs font-bold uppercase tracking-wider text-navy/70 transition-colors hover:text-brand"
-                          >
-                            Details <ArrowRight size={13} />
-                          </Link>
+                          <div className="flex items-center gap-1.5">
+                            <a
+                              href={waItemUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              title={`Enquire about ${it.name} on WhatsApp`}
+                              aria-label={`Enquire about ${it.name} on WhatsApp`}
+                              className="grid h-11 w-11 place-items-center rounded-lg bg-[#1f9d55]/15 text-[#1f9d55] transition-colors hover:bg-[#1f9d55] hover:text-white"
+                            >
+                              <MessageCircle size={17} />
+                            </a>
+                            <Link
+                              to={detailUrl}
+                              className="inline-flex min-h-[44px] items-center gap-1 rounded-lg bg-navy/5 px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider text-navy transition-colors hover:bg-navy hover:text-white"
+                            >
+                              Details <ArrowRight size={13} />
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -388,7 +406,7 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
             })}
 
             {filteredProducts.length === 0 && (
-              <div className="col-span-full rounded-2xl border-2 border-dashed border-navy/25 p-12 text-center bg-paper-light/50">
+              <div className="col-span-full rounded-2xl border-2 border-dashed border-navy/25 bg-paper-light/50 p-8 text-center sm:p-12">
                 <p className="text-lg font-extrabold text-navy">
                   {searchQuery || stockFilter !== "all"
                     ? "No matching products found for your filter."
@@ -401,14 +419,14 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
                       setStockFilter("all");
                       setActive("all");
                     }}
-                    className="mt-4 inline-flex items-center gap-2 rounded-xl bg-navy px-4 py-2.5 text-sm font-bold text-white shadow-[0_3px_0_#050b22]"
+                    className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-navy px-4 py-2.5 text-sm font-bold text-white shadow-[0_3px_0_#050b22]"
                   >
                     Reset Filters
                   </button>
                 ) : (
                   <button
                     onClick={() => setIsAdminOpen(true)}
-                    className="mt-4 inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white shadow-[0_3px_0_#8f1020]"
+                    className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white shadow-[0_3px_0_#8f1020]"
                   >
                     <Plus size={16} /> Add First Product
                   </button>
@@ -420,18 +438,18 @@ export default function Products({ mode = "catalog", sectionNo = "02" }: Product
 
         {mode === "featured" ? (
           <Reveal y={30} delay={0.1}>
-            <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t-2 border-dashed border-navy/15 pt-8 sm:flex-row sm:items-center">
+            <div className="mt-12 flex flex-col items-stretch justify-between gap-4 border-t-2 border-dashed border-navy/15 pt-8 sm:flex-row sm:items-center">
               <p className="font-mono text-xs uppercase tracking-widest text-navy/70">
                 Showing {filteredProducts.length} of {allProducts.length} available products across {catalog.length} categories.
               </p>
-              <PaperButton href="/products" tone="red" icon={<ArrowRight size={18} />}>
+              <PaperButton href="/products" tone="red" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
                 View All Products ({allProducts.length})
               </PaperButton>
             </div>
           </Reveal>
         ) : (
           <Reveal y={30} delay={0.1}>
-            <p className="mt-16 font-mono text-xs uppercase tracking-widest text-navy/60">
+            <p className="mt-12 font-mono text-xs uppercase tracking-widest text-navy/60 sm:mt-16">
               Can't see what you need? Call {biz.phoneDisplay} and ask, or walk in and see the full range.
             </p>
           </Reveal>

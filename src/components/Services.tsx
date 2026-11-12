@@ -83,7 +83,7 @@ export default function Services({ limit, showEnquireLink = false, sectionNo = "
           <div className="mb-8 flex items-center gap-2 md:mb-12">
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-navy/20 bg-paper px-3.5 py-2 text-xs font-bold text-navy shadow-sm transition-all hover:bg-navy hover:text-white"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy/20 bg-paper px-4 py-2.5 text-xs font-bold text-navy shadow-sm transition-all hover:bg-navy hover:text-white"
             >
               <Settings size={14} />
               {isAdminAuthenticated ? "Manage Services" : "Edit Services"}
@@ -121,12 +121,12 @@ export default function Services({ limit, showEnquireLink = false, sectionNo = "
                     </div>
 
                     {showEnquireLink && (
-                      <div className="relative mt-6 pt-4 border-t border-current/15">
+                      <div className="relative mt-6 border-t border-current/15 pt-3">
                         <a
                           href={waServiceUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className={cn("inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider transition-colors", t.link)}
+                          className={cn("inline-flex min-h-[44px] items-center gap-1.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider transition-colors", t.link)}
                         >
                           <MessageCircle size={14} /> Book / Enquire on WhatsApp <ArrowRight size={13} />
                         </a>

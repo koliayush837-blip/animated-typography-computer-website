@@ -12,10 +12,10 @@ export default function Footer() {
     <footer className="relative bg-navy-deep px-4 pb-[calc(7.5rem+env(safe-area-inset-bottom))] pt-16 text-paper sm:pt-24 md:px-8 md:pb-12 md:pt-32">
       <Torn fill="#08122f" seed={91} position="top" />
       <div className="mx-auto max-w-[1400px]">
-        <PaperText text={biz.name.split(" ")[0]} tone="cream" className="text-[clamp(2.1rem,12vw,14rem)]" />
-        <PaperText text={biz.name.split(" ").slice(1).join(" ") || "Computers"} tone="red" delay={0.3} className="text-[clamp(2.1rem,12vw,14rem)]" />
+        <PaperText text={biz.name.split(" ")[0]} tone="cream" className="text-[clamp(1.75rem,11vw,14rem)]" />
+        <PaperText text={biz.name.split(" ").slice(1).join(" ") || "Computers"} tone="red" delay={0.3} className="text-[clamp(1.75rem,11vw,14rem)]" />
 
-        <div className="mt-10 grid gap-10 border-t border-paper/15 pt-10 sm:mt-16 sm:gap-12 sm:pt-12 md:grid-cols-3">
+        <div className="mt-10 grid gap-8 border-t border-paper/15 pt-10 sm:mt-16 sm:gap-12 sm:pt-12 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-3">
               <span className="rounded-lg bg-paper-light p-1.5">
@@ -36,7 +36,7 @@ export default function Footer() {
             <ul className="grid grid-cols-2 gap-2 text-sm font-semibold">
               {PAGE_NAV.map((n) => (
                 <li key={n.href}>
-                  <Link to={n.href} className="text-paper/80 transition-colors hover:text-white">
+                  <Link to={n.href} className="inline-flex min-h-[40px] items-center text-paper/80 transition-colors hover:text-white">
                     {n.label}
                   </Link>
                 </li>
@@ -44,7 +44,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => setIsAdminOpen(true)}
-                  className="flex items-center gap-1.5 text-paper/80 font-bold hover:text-white text-brand"
+                  className="inline-flex min-h-[40px] items-center gap-1.5 font-bold text-brand hover:text-white"
                 >
                   {isAdminAuthenticated ? <Shield size={14} /> : <Lock size={14} />} Admin Studio
                 </button>
